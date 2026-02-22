@@ -154,10 +154,25 @@ export class SaitoClient extends EventEmitter {
    */
   async getBalance(publicKey?: string): Promise<bigint> {
     const key = publicKey || this.config.wallet.publicKey;
-    const data = await fetchJson<{ balance?: string | number }>(
-      `${this.getHttpEndpoint()}/balance/${key}`
-    );
-    return BigInt(data.balance || 0);
+
+    // The /balance endpoint returns plain text (snapshot data), not JSON
+    // We need to parse it or use /stats endpoint instead
+    const response = await fetch(`${this.getHttpEndpoint()}/balance/${key}`);
+    const text = await response.text();
+
+    // Parse the snapshot text format
+    // Format: "publicKey nonce slip_index slip_type amount uuid"
+    const lines = text.split('\n');
+    let balance = 0n;
+
+    for (const line of lines) {
+      const parts = line.trim().split(/\s+/);
+      if (parts[0] === key && parts.length >= 5) {
+        balance += BigInt(parts[4]);
+      }
+    }
+
+    return balance;
   }
 
   /**
@@ -191,10 +206,10 @@ export class SaitoClient extends EventEmitter {
    * Get node version
    */
   async getVersion(): Promise<string> {
-    const data = await fetchJson<{ version: string }>(
+    const data = await fetchJson<{ wallet_version?: number; saito_js?: string }>(
       `${this.getHttpEndpoint()}/version`
     );
-    return data.version;
+    return data.wallet_version?.toString() || data.saito_js || 'unknown';
   }
 
   /**
@@ -227,7 +242,20 @@ export class SaitoClient extends EventEmitter {
    */
   private handleMessage(data: Buffer): void {
     try {
-      const message: Message = JSON.parse(data.toString());
+      // Check if this is a text/JSON message or binary
+      const isText = data.every((byte) => byte < 128 || byte === 0);
+
+      if (!isText) {
+        // Binary message - likely a serialized transaction or block
+        // For now, we'll skip these as we're focused on JSON API
+        console.log('[SaitoClient] Received binary message, skipping...');
+        return;
+      }
+
+      const text = data.toString('utf8');
+
+      // Try to parse as JSON
+      const message: Message = JSON.parse(text);
 
       switch (message.request) {
         case 'handshake':
@@ -243,8 +271,13 @@ export class SaitoClient extends EventEmitter {
           this.emit(`message:${message.request}`, message.data);
       }
     } catch (error) {
-      console.error('[SaitoClient] Error parsing message:', error);
-      this.emit('error', error);
+      // Only log if it's not a binary message issue
+      if (error instanceof SyntaxError) {
+        console.log('[SaitoClient] Non-JSON message received, skipping');
+      } else {
+        console.error('[SaitoClient] Error handling message:', error);
+        this.emit('error', error);
+      }
     }
   }
 

@@ -8,6 +8,10 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "jest",
+    "test:rest": "ts-node examples/rest-only-test.ts",
+    "test:live": "ts-node examples/live-test.ts",
+    "test:basic": "ts-node examples/basic-usage.ts",
+    "test:chat": "ts-node examples/chat-example.ts",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepublishOnly": "npm run build"
@@ -40,6 +44,7 @@
     "eslint": "^8.0.0",
     "jest": "^29.0.0",
     "ts-jest": "^29.0.0",
+    "ts-node": "^10.9.0",
     "prettier": "^3.0.0",
     "typescript": "^5.0.0"
   }
