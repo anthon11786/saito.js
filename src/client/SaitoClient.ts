@@ -14,6 +14,7 @@ import {
   NetworkStats,
   PeerInfo,
 } from '../types';
+import { fetchJson } from '../utils/http';
 
 export interface SaitoClientConfig {
   endpoint: string;
@@ -153,8 +154,9 @@ export class SaitoClient extends EventEmitter {
    */
   async getBalance(publicKey?: string): Promise<bigint> {
     const key = publicKey || this.config.wallet.publicKey;
-    const response = await fetch(`${this.getHttpEndpoint()}/balance/${key}`);
-    const data = await response.json();
+    const data = await fetchJson<{ balance?: string | number }>(
+      `${this.getHttpEndpoint()}/balance/${key}`
+    );
     return BigInt(data.balance || 0);
   }
 
@@ -163,25 +165,25 @@ export class SaitoClient extends EventEmitter {
    */
   async getBlock(hash: string, publicKey?: string): Promise<Block> {
     const key = publicKey || this.config.wallet.publicKey;
-    const url = `${this.getHttpEndpoint()}/lite-block/${hash}/${key}`;
-    const response = await fetch(url);
-    return await response.json();
+    return await fetchJson<Block>(
+      `${this.getHttpEndpoint()}/lite-block/${hash}/${key}`
+    );
   }
 
   /**
    * Get network statistics
    */
   async getStats(): Promise<NetworkStats> {
-    const response = await fetch(`${this.getHttpEndpoint()}/stats`);
-    return await response.json();
+    return await fetchJson<NetworkStats>(`${this.getHttpEndpoint()}/stats`);
   }
 
   /**
    * Get connected peers
    */
   async getPeers(): Promise<PeerInfo[]> {
-    const response = await fetch(`${this.getHttpEndpoint()}/stats/peers`);
-    const data = await response.json();
+    const data = await fetchJson<{ peers?: PeerInfo[] }>(
+      `${this.getHttpEndpoint()}/stats/peers`
+    );
     return data.peers || [];
   }
 
@@ -189,8 +191,9 @@ export class SaitoClient extends EventEmitter {
    * Get node version
    */
   async getVersion(): Promise<string> {
-    const response = await fetch(`${this.getHttpEndpoint()}/version`);
-    const data = await response.json();
+    const data = await fetchJson<{ version: string }>(
+      `${this.getHttpEndpoint()}/version`
+    );
     return data.version;
   }
 
