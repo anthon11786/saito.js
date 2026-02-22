@@ -28,9 +28,8 @@ async function restOnlyTest() {
     const data = await fetchJson<{ wallet_version?: number; saito_js?: string }>(
       `${ENDPOINT}/version`
     );
-    const version = data.wallet_version || data.saito_js || 'unknown';
-    console.log('✓ Node version:', version);
-    console.log('  saito-js version:', data.saito_js);
+    console.log('✓ Node wallet version:', data.wallet_version || 'unknown');
+    console.log('  Node saito-js (WASM) version:', data.saito_js || 'unknown');
   } catch (error) {
     const err = error as Error;
     console.error('❌ Failed:', err.message);
