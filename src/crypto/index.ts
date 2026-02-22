@@ -4,3 +4,4 @@
 
 export * from './keys';
 export * from './sign';
+export * from './base58';
