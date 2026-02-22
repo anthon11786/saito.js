@@ -1,5 +1,9 @@
 # saito.js
 
+[![npm version](https://img.shields.io/npm/v/saito.js.svg)](https://www.npmjs.com/package/saito.js)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/saito-network/saito.js/workflows/Tests/badge.svg)](https://github.com/saito-network/saito.js/actions)
+
 A lightweight JavaScript library for interacting with the Saito Network.
 
 Inspired by [ethers.js](https://github.com/ethers-io/ethers.js/) - simple, complete, and powerful.

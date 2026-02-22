@@ -1,5 +1,5 @@
 /**
- * Simple P2P chat using @saito/client
+ * Simple P2P chat using saito.js
  */
 
 import { SaitoClient, Wallet } from '../src';

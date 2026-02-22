@@ -1,5 +1,5 @@
 /**
- * Basic usage example for @saito/client
+ * Basic usage example for saito.js
  */
 
 import { SaitoClient, Wallet, Transaction } from '../src';
@@ -53,7 +53,7 @@ async function main() {
       module: 'Payment',
       message: 'Hello from @saito/client!',
     });
-    console.log('Transaction sent:', txHash);
+    console.log('✓ Transaction sent:', txHash);
   }
 
   // 7. Create a custom transaction
