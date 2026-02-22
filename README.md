@@ -1,12 +1,14 @@
-# @saito/client
+# saito.js
 
-Lightweight TypeScript/JavaScript client library for interacting with the Saito Network.
+A lightweight JavaScript library for interacting with the Saito Network.
 
-## Why @saito/client?
+Inspired by [ethers.js](https://github.com/ethers-io/ethers.js/) - simple, complete, and powerful.
 
-The full `saito-js` package bundles the entire **6.4MB WASM consensus engine**. Most applications don't need this - they just need to connect to a node, send transactions, and query data.
+## Why saito.js?
 
-**@saito/client** is a minimal SDK (~50KB) that provides everything you need without the heavyweight WASM dependency.
+The existing `saito-js` package bundles the entire **6.4MB WASM consensus engine**. Most applications don't need this - they just need to connect to a node, send transactions, and query data.
+
+**saito.js** is a minimal library (~50KB) that provides everything you need without the heavyweight WASM dependency.
 
 ## Features
 
@@ -21,13 +23,18 @@ The full `saito-js` package bundles the entire **6.4MB WASM consensus engine**. 
 ## Installation
 
 ```bash
-npm install @saito/client
+npm install saito.js
+```
+
+Or with yarn:
+```bash
+yarn add saito.js
 ```
 
 ## Quick Start
 
 ```typescript
-import { SaitoClient, Wallet } from '@saito/client';
+import { SaitoClient, Wallet } from 'saito.js';
 
 // 1. Create a wallet
 const wallet = Wallet.generate();
@@ -132,7 +139,7 @@ const wallet = Wallet.fromJSON(json);
 Transaction builder.
 
 ```typescript
-import { Transaction } from '@saito/client';
+import { Transaction } from 'saito.js';
 
 const tx = new Transaction()
   .addTo('recipient-public-key', 1000000n)
@@ -194,7 +201,7 @@ await client.sendPayment('friend-public-key', 0n, {
 
 ```typescript
 import { Injectable } from '@nestjs/common';
-import { SaitoClient, Wallet } from '@saito/client';
+import { SaitoClient, Wallet } from 'saito.js';
 
 @Injectable()
 export class SaitoService {
@@ -240,9 +247,9 @@ npm run format
 npm run lint
 ```
 
-## Comparison: @saito/client vs saito-js
+## Comparison: saito.js vs saito-js (WASM)
 
-| Feature | @saito/client | saito-js |
+| Feature | saito.js | saito-js (WASM) |
 |---------|---------------|----------|
 | **Size** | ~50KB | ~7MB (6.4MB WASM) |
 | **Purpose** | Network client | Full blockchain node |
@@ -262,4 +269,5 @@ MIT
 
 - [Saito Network](https://saito.io)
 - [Saito Wiki](https://wiki.saito.io)
-- [GitHub](https://github.com/saito-network/saito-client)
+- [GitHub](https://github.com/saito-network/saito.js)
+- [NPM](https://www.npmjs.com/package/saito.js)

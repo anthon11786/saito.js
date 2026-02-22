@@ -1,5 +1,7 @@
 /**
- * @saito/client - Lightweight TypeScript SDK for Saito Network
+ * saito.js - Lightweight JavaScript library for Saito Network
+ *
+ * Inspired by ethers.js - simple, complete, and powerful.
  */
 
 export { SaitoClient } from './client/SaitoClient';
