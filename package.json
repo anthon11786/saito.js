@@ -1,5 +1,5 @@
 {
-  "name": "saito.js",
+  "name": "saitojs-client",
   "version": "0.1.0",
   "description": "Lightweight JavaScript library for Saito Network",
   "main": "dist/index.js",

@@ -1,6 +1,6 @@
 # saito.js
 
-[![npm version](https://img.shields.io/npm/v/saito.js.svg)](https://www.npmjs.com/package/saito.js)
+[![npm version](https://img.shields.io/npm/v/saitojs-client.svg)](https://www.npmjs.com/package/saitojs-client)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Tests](https://github.com/saito-network/saito.js/workflows/Tests/badge.svg)](https://github.com/saito-network/saito.js/actions)
 
@@ -57,12 +57,12 @@ Most applications don't need a full blockchain node. They just need to:
 ## Installation
 
 ```bash
-npm install saito.js
+npm install saitojs-client
 ```
 
 Or with yarn:
 ```bash
-yarn add saito.js
+yarn add saitojs-client
 ```
 
 ---
@@ -72,7 +72,7 @@ yarn add saito.js
 ### 1. Generate a Wallet
 
 ```typescript
-import { Wallet } from 'saito.js';
+import { Wallet } from 'saitojs-client';
 
 const wallet = Wallet.generate();
 
@@ -102,7 +102,7 @@ console.log('Balance:', balance.toString(), 'nolan');
 ### 3. Create & Sign Transaction
 
 ```typescript
-import { Transaction } from 'saito.js';
+import { Transaction } from 'saitojs-client';
 
 const tx = new Transaction()
   .addFrom(wallet.publicKey, 1000000n)
@@ -120,7 +120,7 @@ console.log('Serialized:', tx.serialize());
 ### 4. Query Network Stats
 
 ```typescript
-import { fetchJson } from 'saito.js/dist/utils/http';
+import { fetchJson } from 'saitojs-client/dist/utils/http';
 
 const stats = await fetchJson('http://localhost:12101/stats');
 
@@ -161,7 +161,7 @@ const wallet2 = Wallet.fromJSON(json);
 ### Transaction
 
 ```typescript
-import { Transaction } from 'saito.js';
+import { Transaction } from 'saitojs-client';
 
 // Create transaction
 const tx = new Transaction()
@@ -186,7 +186,7 @@ const tx2 = Transaction.fromJSON(json);
 ### REST API Endpoints
 
 ```typescript
-import { fetchJson } from 'saito.js/dist/utils/http';
+import { fetchJson } from 'saitojs-client/dist/utils/http';
 
 const endpoint = 'http://localhost:12101';
 
@@ -225,7 +225,7 @@ import {
   verify,
   signMessage,
   verifyMessage
-} from 'saito.js';
+} from 'saitojs-client';
 
 // Generate key pair
 const { publicKey, privateKey } = generateKeyPair();
@@ -250,8 +250,8 @@ const valid = verifyMessage('Hello Saito', sig, publicKey);
 ### Complete Wallet App
 
 ```typescript
-import { Wallet } from 'saito.js';
-import { fetchJson } from 'saito.js/dist/utils/http';
+import { Wallet } from 'saitojs-client';
+import { fetchJson } from 'saitojs-client/dist/utils/http';
 
 async function walletApp() {
   // Generate wallet
@@ -403,5 +403,5 @@ MIT
 - [Saito Network](https://saito.io)
 - [Saito Wiki](https://wiki.saito.io)
 - [GitHub](https://github.com/saito-network/saito.js)
-- [NPM](https://www.npmjs.com/package/saito.js)
+- [NPM](https://www.npmjs.com/package/saitojs-client)
 - [Full saito-js (WASM)](https://www.npmjs.com/package/saito-js)
